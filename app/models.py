@@ -1,7 +1,7 @@
 from app import db
-
-
-class User(db.Model):
+from werkzeug import check_password_hash, generate_password_hash
+from flask.ext.login import UserMixin
+class User(db.Model, UserMixin):
     """
     Model Representing the user.
     """
@@ -18,8 +18,8 @@ class User(db.Model):
     date_modified   = db.Column(db.DateTime, default=db.func.current_timestamp(),
                                             onupdate=db.func.current_timestamp())
     rfc             = db.Column(db.String(45), nullable=False)
-    authenticated = db.Column(db.Boolean, default=False)
-    companies       = db.relationship('Company', uselist=False, back_populates="users")
+    authenticated   = db.Column(db.Boolean, default=False)
+    companies       = db.relationship('Company', uselist=False, backref="User")
     
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
@@ -27,18 +27,15 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
     
+    @property
     def is_active(self):
         """True, as all users are active."""
         return True
-
-    def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
-        return self.email
-
+    @property
     def is_authenticated(self):
         """Return True if the user is authenticated."""
         return self.authenticated
-
+    @property
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
@@ -46,7 +43,7 @@ class User(db.Model):
     
     
     def __init__(self, email, password):
-        self.mail = mail
+        self.email = email
         self.set_password(password)
         
     def __repr__(self):
@@ -60,14 +57,12 @@ class Company(db.Model):
     __tablename__ = 'companies'
     id              = db.Column(db.Integer, primary_key=True)
     name            = db.Column(db.String(128), nullable=False)
-    user_id         = db.Column(db.Integer, db.ForeignKey('user.id'),
+    user_id         = db.Column(db.Integer, db.ForeignKey(User.id),
                                                        nullable=False)
-    user            = db.relationship("users", back_populates='User.companies')
     subsidiaries    = db.relationship('Subsidiary')
     
-    def __init__(self, name, user_id):
+    def __init__(self, name):
         self.name = name
-        self.user = user
     
     def __repr__(self):
         return '<Company %r>' % (self.name)
@@ -90,16 +85,9 @@ class Subsidiary(db.Model):
                                             nullable=False)
     employees       = db.relationship('Employee')
     
-    def __init__(self, name, street, suburb, ext_number, interior_number,
-                 postal_code, city, country, company_id):
+    def __init__(self, name, street, company_id):
         self.name
         self.street
-        self.suburb
-        self.ext_number
-        self.interior_number
-        self.postal_code
-        self.city
-        self.country
         self.company_id
     
 class Employee(db.Model):
@@ -122,14 +110,14 @@ class Employee(db.Model):
     job_name        = db.Column(db.String(60), nullable=False)
     subsidiary_id   = db.Column(db.Integer, db.ForeignKey(Subsidiary.id),
                                             nullable=False)
+                 
+    def set_password(self, password):
+        self.pw_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.pw_hash, password)
                                             
-    def __init__(self, name, email, password, lastname, second_lastname, rfc, job_name,
-                 subsidiary_id):
-        self.name = name
+    def __init__(self, email, password, name):
         self.mail = mail
-        self.password = password
-        self.lastname = lastname
-        self.second_lastname = second_lastname
-        self.rfc = rfc 
-        self.job_name = job_name
-        self.subsidiary_id = subsidiary_id
+        self.set_password(password)
+        self.name = name

@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+from itsdangerous import URLSafeTimedSerializer
 
 app = Flask(__name__, )
 
@@ -8,6 +9,8 @@ app.config.from_object('config')
 
 lm = LoginManager()
 lm.init_app(app)
+lm.session_protection = "basic"
+login_serializer = URLSafeTimedSerializer(app.secret_key)
 db = SQLAlchemy(app)
 
 @app.errorhandler(404)

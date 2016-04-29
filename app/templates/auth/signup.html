@@ -19,6 +19,11 @@
     <div>
       <div>
         <h1>Sign Up</h1>
+        {% if sqlerror %}
+          <div class="collection">
+            <a href="#!" class="collection-item red white-text">{{ sqlerror }}</a>
+          </div>
+        {% endif %}
         {% with errors = get_flashed_messages(category_filter=["error"]) %}
           {% if errors %}
             <div>
@@ -42,6 +47,7 @@
           {{ form.csrf_token }}
           {{ render_field(form.email, placeholder="Your Email Address",
                                       autofocus="", class="col s6") }}
+          <label for="email">Email</label>
           {{ render_field(form.password, placeholder="Password", class="col s6") }}
           {{ render_field(form.password_repeat, placeholder="Please type again your password", class="col s6") }}
           {{ render_field(form.name, placeholder="Name", class="col s6") }}
@@ -49,6 +55,7 @@
           {{ render_field(form.lastname, placeholder="Last Name", class="col s6") }}
           {{ render_field(form.second_lastname, placeholder="Second Last Name", class="col s6") }}
           {{ render_field(form.rfc, placeholder="RFC", class="col s6") }}
+          {{ render_field(form.company, placeholder="Company", class="col s6") }}
           <div>
           </div>
           <button class="btn waves-effect waves-light" type="submit" name="submit">Sign Up

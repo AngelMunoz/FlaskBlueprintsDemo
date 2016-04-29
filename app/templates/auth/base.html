@@ -20,14 +20,22 @@
                     <ul class="right hide-on-med-and-down">
                             {% if current_user.is_authenticated %}
                                 <li> Hi {{ current_user.name }}!</li>
+                                <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-teal btn-flat">Log out!</a></li>
                             {% endif %}
-                            <li>Thing</li>
+                            {% if not current_user.is_authenticated %}
+                                <li><a href="{{ url_for('auth.login') }}" class="waves-effect waves-teal btn-flat">Log in!</a></li>
+                                <li><a href="{{ url_for('auth.signup') }}" class="waves-effect waves-teal btn-flat">Sign Up!</a></li>
+                            {% endif %}
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
                         {% if current_user.is_authenticated %}
                                 <li> Hi {{ current_user.name }}!</li>
-                        {% endif %}
-                        <li>Mobile thing</li>
+                                <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-teal btn-flat">Log out!</a></li>
+                            {% endif %}
+                            {% if not current_user.is_authenticated %}
+                                <li><a href="{{ url_for('auth.login') }}" class="waves-effect waves-teal btn-flat">Log in!</a></li>
+                                <li><a href="{{ url_for('auth.signup') }}" class="waves-effect waves-teal btn-flat">Sign Up!</a></li>
+                            {% endif %}
                     </ul>
                     </div>
                 </nav>

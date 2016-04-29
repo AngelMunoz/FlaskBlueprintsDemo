@@ -18,8 +18,8 @@ class RegisterForm(Form):
     password_repeat     = PasswordField('Please Repeat your Password',[
                             Required(message="You must type your password again")])                            
     name                = TextField('Name', [Required(message='Please add your name')])
-    second_name         = TextField('Middle Name')
+    second_name         = TextField('Second Name')
     lastname            = TextField('last Name', [Required(message='Please add your Last Name')])
-    second_lastname     = TextField('Second Surname')
+    second_lastname     = TextField('Second Lastname')
     rfc                 = TextField('RFC', [Required(message='Please add your RFC')])
-    
+    company             = TextField('Company', [Required(message="Please add your Company's Name")])
