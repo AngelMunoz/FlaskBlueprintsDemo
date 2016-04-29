@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for
 from werkzeug import check_password_hash, generate_password_hash
-from flask.ext.login import login_required, logout_user
+from flask.ext.login import login_required, logout_user, current_user
 from app import db, lm
 from app.auth.forms import LoginForm, RegisterForm
 from app.models import User
@@ -30,7 +30,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
-            login_user(user)
+            user.authenticated = True
+            db.session.add(user)
+            db.session.commit()
+            login_user(user, remember=True)
             flash("Welcome %s" % user.name)
             return redirect(url_for("auth.login"))
         flash("Wrong email or password", 'error-message')
@@ -38,21 +41,21 @@ def login():
 
 @auth.route('/logout/', methods=['GET', 'POST'])
 def logout():
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
     logout_user()
-    return "Logout"
+    return render_template("logout.html")
 
 @lm.user_loader
 def user_loader(mail):
-    if mail not in users:
-        return
     user = User.query.filter_by(email=mail).first()
     return user
 
 @lm.request_loader
 def request_loader(request):
     email = request.form.get('email')
-    if email not in users:
-        return
     user = User.query.filter_by(email=mail).first()
     return user
     
@@ -60,6 +63,6 @@ def request_loader(request):
 def unauthorized_handler():
     return 'Unauthorized'
     
-@app.before_request
+@auth.before_request
 def before_request():
     g.user = current_user

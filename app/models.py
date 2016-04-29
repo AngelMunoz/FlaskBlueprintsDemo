@@ -18,13 +18,32 @@ class User(db.Model):
     date_modified   = db.Column(db.DateTime, default=db.func.current_timestamp(),
                                             onupdate=db.func.current_timestamp())
     rfc             = db.Column(db.String(45), nullable=False)
-    companies       = db.relationship('Company', uselist=False, back_populates="user")
+    authenticated = db.Column(db.Boolean, default=False)
+    companies       = db.relationship('Company', uselist=False, back_populates="users")
     
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
+    
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
+    def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return self.email
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+    
+    
     
     def __init__(self, email, password):
         self.mail = mail
@@ -43,7 +62,7 @@ class Company(db.Model):
     name            = db.Column(db.String(128), nullable=False)
     user_id         = db.Column(db.Integer, db.ForeignKey('user.id'),
                                                        nullable=False)
-    user            = db.relationship("User", back_populates='company')
+    user            = db.relationship("users", back_populates='User.companies')
     subsidiaries    = db.relationship('Subsidiary')
     
     def __init__(self, name, user_id):
@@ -67,7 +86,7 @@ class Subsidiary(db.Model):
     postal_code     = db.Column(db.Integer, nullable=False)
     city            = db.Column(db.String(60), nullable=False)
     country         = db.Column(db.String(50), nullable=False)
-    company_id      = db.Column(db.Integer, db.ForeignKey('Company.id'),
+    company_id      = db.Column(db.Integer, db.ForeignKey(Company.id),
                                             nullable=False)
     employees       = db.relationship('Employee')
     
@@ -101,7 +120,7 @@ class Employee(db.Model):
                                             onupdate=db.func.current_timestamp())
     rfc             = db.Column(db.String(45), nullable=False)
     job_name        = db.Column(db.String(60), nullable=False)
-    subsidiary_id   = db.Column(db.Integer, db.ForeignKey('Subsidiary.id'),
+    subsidiary_id   = db.Column(db.Integer, db.ForeignKey(Subsidiary.id),
                                             nullable=False)
                                             
     def __init__(self, name, email, password, lastname, second_lastname, rfc, job_name,
