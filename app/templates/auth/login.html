@@ -1,0 +1,64 @@
+{% extends "auth/base.html" %}
+{% block header%}
+  {{ super()}}
+{% endblock %}
+{% block content %}
+  {% macro render_field(field, placeholder=None) %}
+    {% if field.errors %}
+    <div>
+    {% elif field.flags.error %}
+    <div>
+    {% else %}
+    <div>
+    {% endif %}
+        {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+        {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+    </div>
+  {% endmacro %}
+
+    <div>
+      <div>
+        <h1>Sign in</h1>
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+          {% if errors %}
+            <div>
+            {% for error in errors %}
+            {{ error }}<br>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% if form.errors %}
+          <div>
+          {% for field, error in form.errors.items() %}
+            {% for e in error %}
+            {{ e }}<br>
+            {% endfor %}
+          {% endfor %}
+          </div>
+        {% endif %}
+        <form id="loginForm" method="POST" action="." accept-charset="UTF-8" role="form" class="container">
+          {{ form.csrf_token }}
+          <label for="email">Email</label>
+          {{ render_field(form.email, placeholder="Your Email Address",
+                                      autofocus="", class="col s6 validate") }}
+          <label for="password">Password</label>
+          {{ render_field(form.password, placeholder="Password", class="col s6 validate") }}
+          <div>
+          <a role="button" href="{{ url_for('auth.signup') }}">Don't have an account?</a><span class="clearfix"></span>
+          </div>
+          <button class="btn waves-effect waves-light" type="submit" name="submit">Sign in
+            <i class="material-icons right">send</i>
+          </button>
+        </form>  
+      </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/login.js')}}"></script>
+{% endblock%}
