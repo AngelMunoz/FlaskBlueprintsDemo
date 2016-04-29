@@ -21,8 +21,8 @@ def signup():
              user.lastname = form.lastname.data
              if user.second_lastname is not None:
                 user.second_lastname = form.second_lastname.data
-             if User.query.get(form.rfc.data) is not None:
-                return redirect(url_for("auth.login"))
+             if User.query.get(form.rfc.data) is not None or User.query.get(form.email.data) is not None:
+                return redirect(url_for("auth.login"), uniques="Either the RFC or user's mail is already registered")
              else: 
                 user.rfc = form.rfc.data
              # add company

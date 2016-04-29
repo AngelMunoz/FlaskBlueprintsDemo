@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{ title }}</title>
+        <meta charset="UTF-8">
+        <link href="{{ url_for('static', filename='bower_components/Materialize/dist/css/materialize.min.css')}}" rel="stylesheet">
+         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
+        <script src="{{ url_for('static', filename='bower_components/Materialize/dist/js/materialize.min.js')}}"> </script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            {% block header %}
+                 <nav>
+                    <div class="nav-wrapper blue light-blue">
+                    <a href="#!" class="brand-logo">Logo</a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                            {% if current_user.is_authenticated %}
+                                <li> Hi {{ current_user.name }}!</li>
+                                <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-teal btn-flat">Log out!</a></li>
+                            {% endif %}
+                            {% if not current_user.is_authenticated %}
+                                <li><a href="{{ url_for('auth.login') }}" class="waves-effect waves-teal btn-flat">Log in!</a></li>
+                                <li><a href="{{ url_for('auth.signup') }}" class="waves-effect waves-teal btn-flat">Sign Up!</a></li>
+                            {% endif %}
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        {% if current_user.is_authenticated %}
+                                <li> Hi {{ current_user.name }}!</li>
+                                <li><a href="{{ url_for('auth.logout') }}" class="waves-effect waves-teal btn-flat">Log out!</a></li>
+                            {% endif %}
+                            {% if not current_user.is_authenticated %}
+                                <li><a href="{{ url_for('auth.login') }}" class="waves-effect waves-teal btn-flat">Log in!</a></li>
+                                <li><a href="{{ url_for('auth.signup') }}" class="waves-effect waves-teal btn-flat">Sign Up!</a></li>
+                            {% endif %}
+                    </ul>
+                    </div>
+                </nav>
+            {% endblock%}
+            {% block content %}
+                {% block right_sidebar%}
+                {% endblock %}
+                {% block left_sidebar%}
+                {% endblock %}
+            {% endblock %}
+            <footer>
+                
+                {% block footer %}
+                    <footer class="page-footer blue light-blue">
+                        <div class="container">
+                            <div class="row">
+                            <div class="col l6 s12">
+                                <h5 class="white-text">Footer Content</h5>
+                                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                            </div>
+                            <div class="col l4 offset-l2 s12">
+                                <h5 class="white-text">Links</h5>
+                                <ul>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="footer-copyright">
+                            <div class="container">
+                                © 2016 Copyright Text
+                            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                            </div>
+                        </div>
+                    </footer>
+                {% endblock %}
+            </footer>
+            <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+            {% block scripts %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
