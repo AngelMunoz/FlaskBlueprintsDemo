@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from app import db, lm
 from app.auth.forms import LoginForm, RegisterForm
 from app.models import User, Company
-# Define the blueprint: 'auth', set its url prefix: app.url/auth`
+# Define the blueprint: 'auth', set its url prefix: app.url/auth
 auth = Blueprint('auth', __name__)
 
 @auth.route('/signup/', methods=['GET', 'POST'])
@@ -22,7 +22,9 @@ def signup():
              if user.second_lastname is not None:
                 user.second_lastname = form.second_lastname.data
              if User.query.get(form.rfc.data) is not None or User.query.get(form.email.data) is not None:
-                return redirect(url_for("auth.login"), uniques="Either the RFC or user's mail is already registered")
+                return redirect(url_for("auth.login"),
+                                uniques="Either the RFC or user's mail is already registered",
+                                title="Log in")
              else: 
                 user.rfc = form.rfc.data
              # add company
@@ -49,7 +51,7 @@ def login():
     form = LoginForm(request.form)
     if g.user is not None and g.user.is_authenticated:
         print("User %s logged in" % g.user.name)
-        return redirect(url_for('auth.signup'))
+        return redirect(url_for('admin.home'))
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.pw_hash, form.password.data):
@@ -59,9 +61,9 @@ def login():
             login_user(user, remember=True)
             flash("Welcome %s" % user.name)
             print("Just logged in")
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("admin.home"))
         flash("Wrong email or password", 'error-message')
-    return render_template("auth/login.html", form=form, user=g.user)
+    return render_template("auth/login.html", form=form, user=g.user, title="Log in")
 
 @auth.route('/logout/', methods=['GET', 'POST'])
 @login_required
@@ -72,7 +74,7 @@ def logout():
     db.session.add(user)
     db.session.commit()
     logout_user()
-    return render_template("auth/logout.html")
+    return render_template("auth/logout.html", title="Log out")
 
 @lm.user_loader
 def user_loader(email):

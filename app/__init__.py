@@ -26,7 +26,7 @@ def internal_error(error):
     return render_template("500.html"), 500
     
 from app.auth.views import auth
-from app.admin.controllers import admin
+from app.admin.views import admin
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(admin, url_prefix='/admin')
 

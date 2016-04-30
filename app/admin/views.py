@@ -1,6 +1,5 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for
-from werkzeug import check_password_hash, generate_password_hash
 from flask.ext.login import login_required, login_user, \
                             current_user, logout_user
 # from sqlalchemy.exc import IntegrityError
@@ -8,23 +7,25 @@ from app import db, lm
 # from app.admin.forms import # Admin forms
 from app.models import User, Company, Subsidiary, Employee
 
-admin = Blueprint('auth', __name__)
+admin = Blueprint('admin', __name__)
 
 @admin.route('/home/')
 @login_required
 def home():
-    # render template of home
-    pass
+    return render_template('admin/home.html', title="Home")
     
-@admin.route('/subsidiaries/<subsidiary>')
+@admin.route('/subsidiaries/')
 @login_required
-def subsidiary(subsidiary):
+def subsidiaries():
     # render subsidiary template
     pass
+@admin.route('/company/')
+def company():
+    # render company template
+    pass
     
-    
-@admin.route('/employees/<rfc>')
+@admin.route('/employees/')
 @login_required
-def employee(rfc):
+def employees():
     # render employee template
     pass
