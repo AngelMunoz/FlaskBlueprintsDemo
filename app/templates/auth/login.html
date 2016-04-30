@@ -1,9 +1,5 @@
 {% extends "auth/base.html" %}
-{% block header%}
-  {{ super()}}
-{% endblock %}
-{% block content %}
-  {% macro render_field(field, placeholder=None) %}
+{% macro render_field(field, placeholder=None) %}
     {% if field.errors %}
     <div>
     {% elif field.flags.error %}
@@ -11,10 +7,17 @@
     {% else %}
     <div>
     {% endif %}
-        {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+        {% set css_class = 'form-control validate' + kwargs.pop('class', '') %}
         {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
     </div>
-  {% endmacro %}
+{% endmacro %}
+{% block head %}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+{% block header%}
+  {{ super()}}
+{% endblock %}
+{% block content %}
 
     <div>
       <div>
@@ -60,5 +63,5 @@
   {{ super() }}
 {% endblock %}
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/login.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/auth/login.js')}}"></script>
 {% endblock%}

@@ -1,9 +1,5 @@
 {% extends "auth/base.html" %}
-{% block header%}
-  {{ super()}}
-{% endblock %}
-{% block content %}
-  {% macro render_field(field, placeholder=None) %}
+{% macro render_field(field, placeholder=None) %}
     {% if field.errors %}
     <div>
     {% elif field.flags.error %}
@@ -14,8 +10,16 @@
         {% set css_class = 'form-control validate' + kwargs.pop('class', '') %}
         {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
     </div>
-  {% endmacro %}
-
+{% endmacro %}
+{% block head %}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+{% endblock %}
+{% block header%}
+  {{ super()}}
+{% endblock %}
+{% block content %}
+  
+ 
     <div>
       <div>
         <h1>Sign Up</h1>
@@ -70,5 +74,5 @@
   {{ super() }}
 {% endblock %}
 {% block scripts %}
-  <script src="{{ url_for('static', filename='js/register.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/auth/register.js')}}"></script>
 {% endblock%}

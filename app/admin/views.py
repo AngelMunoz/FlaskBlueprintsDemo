@@ -14,44 +14,33 @@ admin = Blueprint('admin', __name__)
 def home():
     return render_template('admin/home.html', title="Home")
     
-@admin.route('/subsidiaries/')
+@admin.route('/subsidiaries/', methods=['GET','POST'])
 @login_required
 def subsidiaries():
-    # render subsidiaries form
-    pass
+    newsubform = NewSubsidiaryForm(request.form)
+    if request.method == "POST": 
+        if newsubform.validate():
+            # validate this form
+            print('valid new sub')
+            # remember you need to add the company's id to the sub
+            # before adding it to the database
+        else:
+            return jsonify(newsubform.errors), 400
     
-@admin.route('/company/', methods=['GET', 'POST'])
+@admin.route('/company/', methods=['GET', 'PUT'])
 def company():
-    newsubform = NewSubsidiaryForm()
-    editcompform = EditCompanyForm()
-    this_company="compa" # placeholder
-    subsidiaries = [{'name':'s'},{'name':'g'},{'name':'h'}]
-    if request.method == "POST":
-        if "postal_code" in request.form: # Add a new Subsidiary case
-            for key in request.form:
-                if key in newsubform:
-                    newsubform[key].data = request.form[key]    
-            if newsubform.validate():
-                # validate this form
-                print('valid new sub')
-                # remember you need to add the company's id to the sub
-                # before adding it to the database
-            else:
-                return jsonify(newsubform.errors), 400
-        else: # Edit Company's Name case
-            for key in request.form:
-                if key in editcompform:
-                    editcompform[key].data = request.form[key]
-            if editcompform.validate():
-                # validate this form
-                print('edit valid')
-            else:
-                return jsonify(editcompform.errors), 400            
-            
+    editcompform = EditCompanyForm(request.form)
+    current_company = Company.query.filter(User.id == current_user.id).first()
+    if request.method == "PUT":
+        if editcompform.validate():
+            # validate this form
+            print('edit valid')
+        else:
+            return jsonify(editcompform.errors), 400             
     return render_template("admin/company.html", newsubform=newsubform,
                             editcompform=editcompform,
                             subsidiaries=subsidiaries,
-                            company=this_company)
+                            company=current_company)
     
     
 @admin.route('/employees/')

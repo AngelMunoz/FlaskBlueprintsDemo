@@ -1,8 +1,14 @@
 {% extends "admin/base.html" %}
 
- {% macro render_field(field, placeholder=None) %}
+{% macro render_field(field, placeholder=None) %}
+    {% if field.errors %}
     <div>
-        {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+    {% elif field.flags.error %}
+    <div>
+    {% else %}
+    <div>
+    {% endif %}
+        {% set css_class = 'form-control validate' + kwargs.pop('class', '') %}
         {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
     </div>
   {% endmacro %}

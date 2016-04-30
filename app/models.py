@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
                                             onupdate=db.func.current_timestamp())
     rfc             = db.Column(db.String(45), nullable=False)
     authenticated   = db.Column(db.Boolean, default=False)
-    companies       = db.relationship('Company', uselist=False, backref="User")
+    company       = db.relationship('Company', uselist=False, backref="User")
     
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
