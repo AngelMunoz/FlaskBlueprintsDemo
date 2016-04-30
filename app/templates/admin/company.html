@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin/company.css')}}">
+{% endblock %}
+{% block nav_large %}
+    {{ super() }}
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large red">
+        <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+            <li><a id="addSub"  class="btn-floating red"><i class="material-icons">add</i></a></li>
+            <li><a id="editComp" class="btn-floating yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block nav_mobile %}
+    {{ super() }}
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large red">
+        <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+            <li><a id="addSub-mobile"  class="btn-floating red"><i class="material-icons">add</i></a></li>
+            <li><a id="editComp-mobile" class="btn-floating yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block left_panel %}
+    {{super()}}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        {#
+            Image that covers all the background
+        #}
+    </div>
+    <div class="row">
+      <div class="col s4">
+        <ul>
+            {% for subsidiary in subsidiaries %}
+                <li>{{ subsidiary.name }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+      <div class="col s4">
+        <!-- Promo Content 2 goes here -->
+        <div class="newWrapper">
+            {#
+                forma de nueva subsidiaria
+            #}
+        </div>
+      </div>
+      <div class="col s4">
+        <div class="editWrapper">
+            {#
+                forma de nueva subsidiaria
+            #}
+        </div>
+      </div>
+
+    </div>
+{% endblock %}
+{% block scripts %}
+{% endblock%}
