@@ -21,7 +21,7 @@ class NewSubsidiaryForm(Form):
                                Required(message="Please supply your postal code")])
     city = StringField('Company', [Required(message="Please add your Company's Name")])
     country = StringField('Company', [Required(message="Please add your Company's Name")])
-    company_name = StringField('Company', [Required(message="Please add your Company's Name")])
+    
     
 class EditCompanyForm(Form):
     new_name = StringField('Email Address', [Required(message='Please add the new name of the company')])
