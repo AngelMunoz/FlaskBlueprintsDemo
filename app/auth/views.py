@@ -30,7 +30,7 @@ def signup():
                 except IntegrityError:
                     db.session.rollback()
                     mess = "Either Email or the RFC exist in the database"
-                    return jsonify([{"error":mess}]), 409
+                    return jsonify({"error":mess}), 409
                 company = Company(form.company.data)
                 company.user_id = user.id
                 db.session.add(company)
@@ -51,16 +51,20 @@ def login():
         return redirect(url_for('admin.home'))
     if request.method == "POST":
         if form.validate():
-            user = User.query.filter_by(email=form.email.data).first()
+            user = User.query.filter_by(email=form.email.data).first_or_404()
             if user and check_password_hash(user.pw_hash, form.password.data):
                 user.authenticated = True
                 db.session.add(user)
                 db.session.commit()
                 login_user(user, remember=True)
                 flash("Welcome %s" % user.name)
-                print("Just logged in")
                 return redirect(url_for("admin.home"))
+            else:
+                mess = "Wrong email or password"
+                return jsonify({"error":mess}), 404
             flash("Wrong email or password", 'error-message')
+        else:
+            return jsonify(form.errors), 400
     return render_template("auth/login.html", form=form, title="Log in")
 
 @auth.route('/logout/', methods=['GET', 'POST'])

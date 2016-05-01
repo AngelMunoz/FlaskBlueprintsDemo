@@ -13,14 +13,10 @@ $(document).ready(function() {
       return regex.test(password);  
     }
     
-    
-    signupForm.on('submit', function(e) {
-        e.preventDefault()
-        var formData = $(this).serialize();
-        var csrftoken = $('meta[name=csrf-token]').attr('content');
+    var validateForm = function(form){
         var errors = [];
         var valids = [];
-        $(this).serializeArray().forEach(function(element) {
+        form.serializeArray().forEach(function(element) {
             
             if (element.name === 'email') {
                 if(!validateEmail(element.value) || element.value.length < 1){
@@ -38,7 +34,13 @@ $(document).ready(function() {
                     valids.push(element.name);
                 }
             }
-            if (element.name !== 'csrf_token') {
+            if (element.name === 'second_name') {
+                valids.push(element.name);
+            }
+            else if (element.name === 'second_lastname') {
+                valids.push(element.name);
+            }
+            else if (element.name !== 'csrf_token') {
                 if (element.value.length < 1) {
                     errors.push(element.name);
                 }
@@ -52,15 +54,20 @@ $(document).ready(function() {
             errors.forEach(function(errorField){
                 $("#"+ errorField).toggleClass('invalid', true);
             });
-            return;
+            return false;
         }
         if (valids.length > 0) {
             valids.forEach(function(validField){
                 $("#"+ validField).toggleClass('invalid', false);
-                $("#"+ validField).toggleClass('valid', true);
             });
-            return;
         }
+        return true
+    }
+    
+    signupForm.on('submit', function(e) {
+        e.preventDefault()
+        var formData = $(this).serialize();
+        var csrftoken = $('meta[name=csrf-token]').attr('content');
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
                 if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
@@ -68,14 +75,17 @@ $(document).ready(function() {
                 }
             },
         });
-        $.ajax({
-                //more changes here
+        if (validateForm($(this))) {
+            $.ajax({
                 data: formData,
                 url: '/auth/signup/',
                 contentType:'application/x-www-form-urlencoded;charset=UTF-8',
                 type: "POST",
                 success: function(response) {
                     Materialize.toast("Signed Up Succesfully!\n Please Log in!", 4000);
+                    setTimeout(function() {
+                        window.location.assign(location.host+"/auth/login/");    
+                    }, 100);
                 },
                 error: function(error) {
                     var errorObj = JSON.parse(error.responseText);
@@ -91,7 +101,8 @@ $(document).ready(function() {
                     }
                     
                 }
-        });
+            });   
+        }
         
     });
 });

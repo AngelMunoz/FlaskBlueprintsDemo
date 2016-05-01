@@ -49,18 +49,27 @@
         {% endif %}
         <form id="signupForm" method="POST" action="." accept-charset="UTF-8" role="form" class="container">
           {{ form.csrf_token }}
+          <label for="email">Email <small>*</small></label>
           {{ render_field(form.email, placeholder="Your Email Address",
                                       autofocus="", class="col s6") }}
-          <label for="email">Email</label>
+          <label for="password">Password <small>*</small></label>
           {{ render_field(form.password, placeholder="Password", class="col s6") }}
+          <label for="password_repeat">Repeat your password <small>*</small></label>
           {{ render_field(form.password_repeat, placeholder="Please type again your password", class="col s6") }}
+          <label for="name">Name <small>*</small></label>
           {{ render_field(form.name, placeholder="Name", class="col s6") }}
+          <label for="second_name">Second Name <small>optional</small></label>
           {{ render_field(form.second_name, placeholder="Second Name", class="col s6") }}
+          <label for="lastname">Last Name <small>*</small></label>
           {{ render_field(form.lastname, placeholder="Last Name", class="col s6") }}
+          <label for="second_lastname">Second Last Name <small>optional</small></label>
           {{ render_field(form.second_lastname, placeholder="Second Last Name", class="col s6") }}
+          <label for="rfc">RFC <small>*</small></label>
           {{ render_field(form.rfc, placeholder="RFC", class="col s6") }}
+          <label for="company">Company's Name <small>*</small></label>
           {{ render_field(form.company, placeholder="Company", class="col s6") }}
           <div>
+            <small class="red-text">All fields marked with "*" are required</small>
           </div>
           <button class="btn waves-effect waves-light" type="submit" name="submit">Sign Up
             <i class="material-icons right">send</i>
