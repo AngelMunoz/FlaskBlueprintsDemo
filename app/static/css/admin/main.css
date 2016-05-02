@@ -2,6 +2,10 @@
     height: 20px;
     width: 20px;
 }
+.outside-picture {
+    width: 100%;
+    max-height: 320px;
+}
 body {
     display: flex;
     min-height: 100vh;

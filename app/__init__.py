@@ -36,8 +36,8 @@ def internal_error(error):
     return render_template("500.html"), 500
 
 # Importing views 
-from app.auth.views import auth
-from app.admin.views import admin
+from app.auth.controller import auth
+from app.admin.controller import admin
 # register blueprints
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(admin, url_prefix='/admin')
