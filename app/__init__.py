@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from itsdangerous import URLSafeTimedSerializer
@@ -51,15 +51,6 @@ def method_not_allowed(error):
     """Handle 405 errors."""
     return render_template("error/405.html", method=request.method), 405
 
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    """Handle 500 errors."""
-    if app.config["DEVELOPMENT"]:
-        # send error details
-        return error.message, 500
-    return render_template("error/500.html"), 500
-    
     
 # Importing views 
 from app.auth.controller import auth
@@ -67,5 +58,14 @@ from app.admin.controller import admin
 # register blueprints
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(admin, url_prefix='/admin')
+
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+    
+@app.errorhandler(500)
+def internal_server_error(error):
+    """Handle 500 errors."""
+    return render_template("error/500.html"), 500
 # init database 
 db.create_all()

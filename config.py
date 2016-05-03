@@ -1,7 +1,5 @@
-DEBUG = True
-
 import os
-SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root:admin123@127.0.0.1/examen_timbox_db'
+SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 DATABASE_CONNECT_OPTIONS = {}
 
 # App threads, a common assumption is
