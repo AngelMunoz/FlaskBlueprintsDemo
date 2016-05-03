@@ -38,13 +38,13 @@
                         class="btn-floating green darken-1 tooltipped z-depth-2 waves-light modal-trigger"
                         data-position="left"
                         data-delay="50"
-                        data-tooltip="Add New Subsidiary"
+                        data-tooltip="Add New Employee"
                         href="#newEmpModal"><i class="material-icons">add</i></a></li>
             </ul>
         </div>
         <div id="newEmpModal" class="modal">
             <div class="modal-content">
-                <h4>Edit Company's Name</h4>
+                <h4>Add a new Employee</h4>
                 <form id="newEmpForm" method="POST" action="." accept-charset="UTF-8" role="form" class="container">
                     {{ newempform.csrf_token }}
                     <label for="email">Email <small>*</small></label>
@@ -65,25 +65,28 @@
                     <label for="rfc">RFC <small>*</small></label>
                     {{ render_field(newempform.rfc, placeholder="RFC", class="col s6") }}
                     <label for="company">Subsidiary <small>(where the employee will be hired)*</small></label>
-                    {{ render_field(newempform.subsidiary, placeholder="Subsidiary Name", class="col s6") }}
+                    {{ render_field(newempform.subsidiary_id, placeholder="Subsidiary Name", class="col s6") }}
+                    <label for="job_name">Position</label>
+                    {{ render_field(newempform.job_name, placeholder="Position to fill", class="col s6") }}
                     <div>
                         <small class="red-text">All fields marked with "*" are required</small>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="submit">Sign Up
+                    <button class="btn waves-effect waves-light" type="submit" name="submit">Add Employee
                         <i class="material-icons right">send</i>
                     </button>
-                </form>  
+                </form>                
             </div>
         </div>
     </div>
-    
-    {#
-        {% for subsidiary in subsidiaries %}
-            <a href="{{ url_for('admin.subsidiaries')}}{{ subsidiary.name}}" class="collection-item">{{ subsidiary.name }}</a>
-        {% endfor %}
-    #}
     <div class="row">
-        <div class="col s12">
+        <div class="col s6">
+            <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae magna tristique, euismod libero ac, pharetra ipsum. Morbi mi arcu, elementum ut accumsan eu, elementum a nisi. Integer efficitur tortor urna. Phasellus feugiat, diam sit amet maximus accumsan, neque tellus fermentum lacus, non finibus arcu lorem vel purus. Suspendisse sed mi sit amet enim elementum volutpat ac eget elit. Sed non justo vitae velit facilisis sodales et id felis. Nunc lobortis cursus diam, eu auctor libero fringilla et. Nulla et scelerisque leo, in fringilla sem. Fusce et eros vitae enim tempus fringilla ut eu tellus. Donec in porttitor arcu, feugiat ullamcorper urna. Vivamus lobortis quam vestibulum augue lobortis, eget volutpat dui blandit.
+                <br>
+                Curabitur vitae volutpat lorem, eu scelerisque nunc. Praesent ac ex erat. Suspendisse feugiat orci non mi aliquam, eu ornare nisi aliquet. Pellentesque condimentum faucibus lobortis. Duis lobortis enim nec efficitur tempor. Cras eleifend sapien tellus, eget fringilla libero blandit in. Suspendisse scelerisque mi in viverra dictum. Proin eleifend velit metus, eget commodo mi consequat a. Maecenas laoreet diam sed gravida semper. Curabitur vitae viverra urna. Etiam posuere semper leo et iaculis. Phasellus lacinia fermentum enim a volutpat. Fusce id blandit justo. Donec ut condimentum felis. Suspendisse eros dolor, elementum eget malesuada ut, dictum quis velit. Praesent dignissim porta ligula, ut efficitur arcu ullamcorper vitae.
+            </p>
+        </div>
+        <div class="col s6">
             <ul class="tabs">
                 {% for subsidiary in subsidiaries %}
                     <li class="tab col s2">
@@ -92,21 +95,23 @@
                 {% endfor %}
             </ul>
         </div>
-        {% for subsidiary in subsidiaries %}
-                <div id="{{ subsidiary.name}}-{{ subsidiary.id }}" class="col s12">
-                    <ul class="collection with-header">
-                        <li><h4>{{ subsidiary.name }}'s employees</h4></li>
-                        {% for employee in subsidiary.employees %}
-                            <li class="collection-item">
-                                <a href="{{ url_for('admin.employees')}}{{ employee.rfc }}" class="secondary-content">
-                                    {{ employee.name }}
-                                    <i class="material-icons">send</i>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
+        <div class="row">
+            {% for subsidiary in subsidiaries %}
+            <div id="{{ subsidiary.name}}-{{ subsidiary.id }}" class="col s6">
+                <ul class="collection with-header">
+                    <li><h4>{{ subsidiary.name }}'s employees</h4></li>
+                    {% for employee in subsidiary.employees %}
+                        <li class="collection-item">
+                           {{ employee.name }}
+                            <a href="{{ url_for('admin.employees')}}{{ employee.rfc }}" class="secondary-content">
+                                <i class="material-icons">send</i>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        </div>
     </div>
 {% endblock %}
 {% block scripts %}

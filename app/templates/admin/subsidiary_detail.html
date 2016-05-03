@@ -70,7 +70,7 @@
                     {{ render_field(editform.city, placeholder="New City", class="validate") }}
                     <label for="country">Country</label>
                     {{ render_field(editform.country, placeholder="New Country", class="validate") }}
-                    <button class="btn waves-effect waves-light" type="submit" name="submit">Send Changes
+                    <button class="btn waves-effect waves-light" type="submit" name="submit">Save {{subsidiary.name}} changes
                         <i class="material-icons right">send</i>
                     </button>
                 </form>
@@ -94,7 +94,7 @@
             <ul class="collection with-header">
                 <li class="collection-header"><h3>Employees</h3></li>
                 {% for employee in employees %}
-                    <a href="{{ url_for('admin.employees')}}{{ employee.name}}" class="collection-item">{{ subsidiary.name }}</a>
+                    <a href="{{ url_for('admin.employees')}}{{ employee.rfc}}" class="collection-item">{{ employee.name }}</a>
                 {% endfor %}
             </ul>
         </div>
