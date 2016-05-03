@@ -115,7 +115,6 @@ class Employee(db.Model):
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
                                             
-    def __init__(self, email, password, name):
+    def __init__(self, email, password):
         self.mail = mail
         self.set_password(password)
-        self.name = name

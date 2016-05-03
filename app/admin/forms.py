@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, IntegerField
-from wtforms.validators import Required, NumberRange, Optional
+from wtforms.validators import Required, NumberRange, Optional, Email
 
 
 class NewSubsidiaryForm(Form):
@@ -25,3 +25,29 @@ class EditSubsidiaryForm(Form):
     
 class EditCompanyForm(Form):
     new_name = StringField('Email Address', [Required(message='Please add the new name of the company')])
+    
+
+class NewEmployeeForm(Form):
+    email = StringField('Email Address', [Email(),Required(message="Please write the email.")])
+    password = PasswordField('Password', [Required(message="Write the password")])
+    password_repeat = PasswordField("Please Repeat your password", [Required(message="Write the password again please")])
+    name = StringField('Name', [Required(message="Please add the Name")])
+    second_name = IntegerField('Second Name', [Optional()])
+    lastname =IntegerField('Last Name',[Required(message="Please write the last name")])
+    second_lastname = IntegerField('Second Last Name',[Optional()])
+    rfc = StringField('RFC', [Required(message="Please add the RFC")])
+    job_name = StringField('job name', [Required(message="Please add the job's Name")])
+    subsidiary = StringField('Subsidiary Name', [Required(message="Please specify which Subsidiary")])
+    
+class EditEmployeeForm(Form):
+    email = StringField('Email Address', [Optional()])
+    password = PasswordField('Password', [Optional()])
+    password_repeat = PasswordField("Repeat the Password", [Optional()])
+    name = StringField('Name', [Optional()])
+    second_name = IntegerField('Second Name', [Optional()])
+    lastname =IntegerField('Last Name', [Optional()])
+    second_lastname = IntegerField('Second Last Name', [Optional()])
+    rfc = StringField('RFC', [Optional()])
+    job_name = StringField('job name', [Optional()])
+    
+    

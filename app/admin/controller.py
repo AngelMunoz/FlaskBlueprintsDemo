@@ -5,7 +5,8 @@ from flask.ext.login import login_required, login_user, \
 from sqlalchemy.exc import IntegrityError
 from app import db, lm
 from app.admin.forms import NewSubsidiaryForm, EditCompanyForm, \
-                            EditSubsidiaryForm
+                            EditSubsidiaryForm, NewEmployeeForm, \
+                            EditEmployeeForm
 from app.models import User, Company, Subsidiary, Employee
 
 admin = Blueprint('admin', __name__)
@@ -14,12 +15,37 @@ admin = Blueprint('admin', __name__)
 @login_required
 def home():
     return render_template('admin/home.html', title="Home")
+
+
+    
+@admin.route('/company/', methods=['GET', 'PUT'])
+def company():
+    editcompform = EditCompanyForm(request.form)
+    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    subsidiaries = current_company.subsidiaries
+    if request.method == "PUT":
+        if editcompform.validate():
+            current_company.name = editcompform.new_name.data
+            db.session.add(current_company)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                mess = "That Name is Already Taken"
+                return jsonify({"error":mess}), 409
+        else:
+            return jsonify(editcompform.errors), 400             
+    return render_template("admin/company.html",
+                            editform=editcompform,
+                            company=current_company,
+                            title=current_company.name,
+                            subsidiaries=subsidiaries)
+
     
 @admin.route('/subsidiaries/', methods=['GET','POST'])
 @login_required
 def subsidiaries():
     newsubform = NewSubsidiaryForm(request.form)
-    current_company = Company.query.filter(User.id == current_user.id).first_or_404()
+    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
     if request.method == "POST": 
         if newsubform.validate():
             new_sub = Subsidiary()
@@ -78,35 +104,47 @@ def subsidiary(sub_name):
                             title=current_sub.name,
                             employees=current_sub.employees)
     
-    
-@admin.route('/company/', methods=['GET', 'PUT'])
-def company():
-    editcompform = EditCompanyForm(request.form)
-    current_company = Company.query.filter(User.id == current_user.id).first_or_404()
-    subsidiaries = current_company.subsidiaries
-    if request.method == "PUT":
-        if editcompform.validate():
-            current_company.name = editcompform.new_name.data
-            db.session.add(current_company)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                mess = "That Name is Already Taken"
-                return jsonify({"error":mess}), 409
-        else:
-            return jsonify(editcompform.errors), 400             
-    return render_template("admin/company.html",
-                            editform=editcompform,
-                            company=current_company,
-                            title=current_company.name,
-                            subsidiaries=subsidiaries)
+
     
     
-@admin.route('/employees/')
+@admin.route('/employees/', methods=['GET','POST'])
 @login_required
 def employees():
-    # render employee template
-    pass
+    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    # send subsidiary item
+    subsidiaries = current_company.subsidiaries
+    # send new employee form
+    newempform = NewEmployeeForm(request.form)
+    if request.method == "POST":
+        # validate form
+        if newempform.validate():
+            new_emp = Employee(newempform.email.data, newempfor.password.data)
+            if new_emp:
+                new_emp.name = form.name.data
+                if new_emp.second_name is not None:
+                    new_emp.second_name = form.second_name.data
+                new_emp.lastname = form.lastname.data
+                if new_emp.second_lastname is not None:
+                    new_emp.second_lastname = form.second_lastname.data 
+                new_emp.rfc = form.rfc.data
+                new_emp.job_name = form.job_name.data
+                # add new employee
+                db.session.add(new_emp)
+                try:
+                    # commit new employee to database
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
+                    mess = "Either Email or the RFC exist in the database"
+                    return jsonify({"error":mess}), 400                
+        else:
+            return jsonify(newempform.errors), 400
+    return render_template('admin/employee.html',
+                            newempform=newempform,
+                            current_company=current_company,
+                            subsidiaries=subsidiaries)
+    # navigate from employee to employee
+    
     
 @admin.route('/employees/<rfc>')
 @login_required
