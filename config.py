@@ -1,9 +1,7 @@
 DEBUG = True
 
 import os
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
-SQLALCHEMY_DATABASE_URI = os.environ['SQLALCHEMY_DATABASE_URI']
+SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DB_URI"]
 DATABASE_CONNECT_OPTIONS = {}
 
 # App threads, a common assumption is
