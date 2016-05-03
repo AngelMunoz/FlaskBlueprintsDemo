@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{885e73db-1214-4acd-9efa-022490469a51}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>run.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{789894c7-04a9-4a11-a6b5-3f4435165112};{1b580a1a-fdb3-4b32-83e1-6407eb2722e6};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Web launcher</LaunchProvider>
+    <InterpreterId>{8c7ef985-556b-4a0a-82ed-667a33ca4277}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <PythonWsgiHandler>{StartupModule}.wsgi_app</PythonWsgiHandler>
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app\static\bower_components\jquery\dist\jquery.js" />
+    <Content Include="app\static\bower_components\jquery\dist\jquery.min.js" />
+    <Content Include="app\static\bower_components\jquery\dist\jquery.slim.js" />
+    <Content Include="app\static\bower_components\jquery\dist\jquery.slim.min.js" />
+    <Content Include="app\static\bower_components\jquery\sizzle\dist\sizzle.js" />
+    <Content Include="app\static\bower_components\jquery\sizzle\dist\sizzle.min.js" />
+    <Content Include="app\static\bower_components\jquery\sizzle\LICENSE.txt" />
+    <Content Include="app\static\bower_components\Materialize\dist\css\materialize.css" />
+    <Content Include="app\static\bower_components\Materialize\dist\css\materialize.min.css" />
+    <Content Include="app\static\bower_components\Materialize\dist\font\material-design-icons\Material-Design-Icons.svg" />
+    <Content Include="app\static\bower_components\Materialize\dist\js\materialize.js" />
+    <Content Include="app\static\bower_components\Materialize\dist\js\materialize.min.js" />
+    <Content Include="app\static\bower_components\Materialize\extras\noUiSlider\nouislider.css" />
+    <Content Include="app\static\bower_components\Materialize\extras\noUiSlider\nouislider.js" />
+    <Content Include="app\static\bower_components\Materialize\extras\noUiSlider\nouislider.min.js" />
+    <Content Include="app\static\css\admin\main.css" />
+    <Content Include="app\static\css\auth\main.css" />
+    <Content Include="app\static\images\company\outside.jpg" />
+    <Content Include="app\static\images\company\outside_sub.jpg" />
+    <Content Include="app\static\images\user\user-icon.png" />
+    <Content Include="app\static\js\admin\company.js" />
+    <Content Include="app\static\js\admin\home.js" />
+    <Content Include="app\static\js\admin\subsidiary.js" />
+    <Content Include="app\static\js\admin\subsidiary_detail.js" />
+    <Content Include="app\static\js\auth\login.js" />
+    <Content Include="app\static\js\auth\register.js" />
+    <Content Include="app\static\js\main.js" />
+    <Content Include="app\templates\403.html" />
+    <Content Include="app\templates\404.html" />
+    <Content Include="app\templates\admin\base.html" />
+    <Content Include="app\templates\admin\company.html" />
+    <Content Include="app\templates\admin\home.html" />
+    <Content Include="app\templates\admin\subsidiary.html" />
+    <Content Include="app\templates\admin\subsidiary_detail.html" />
+    <Content Include="app\templates\auth\base.html" />
+    <Content Include="app\templates\auth\forgot.html" />
+    <Content Include="app\templates\auth\login.html" />
+    <Content Include="app\templates\auth\logout.html" />
+    <Content Include="app\templates\auth\signup.html" />
+    <Content Include="bin\ConfigureCloudService.ps1" />
+    <Content Include="bin\ps.cmd" />
+    <Content Include="bin\Readme.mht">
+      <SubType>WebBrowser</SubType>
+    </Content>
+    <Content Include="requirements.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="app\admin\controller.py" />
+    <Compile Include="app\admin\forms.py" />
+    <Compile Include="app\admin\__init__.py" />
+    <Compile Include="app\auth\controller.py" />
+    <Compile Include="app\auth\forms.py" />
+    <Compile Include="app\auth\__init__.py" />
+    <Compile Include="app\models.py" />
+    <Compile Include="app\__init__.py" />
+    <Compile Include="config.py" />
+    <Compile Include="run.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app" />
+    <Folder Include="app\admin" />
+    <Folder Include="app\auth" />
+    <Folder Include="app\static\" />
+    <Folder Include="app\static\bower_components\" />
+    <Folder Include="app\static\bower_components\jquery\" />
+    <Folder Include="app\static\bower_components\jquery\dist" />
+    <Folder Include="app\static\bower_components\jquery\sizzle" />
+    <Folder Include="app\static\bower_components\jquery\sizzle\dist" />
+    <Folder Include="app\static\bower_components\Materialize\" />
+    <Folder Include="app\static\bower_components\Materialize\dist\" />
+    <Folder Include="app\static\bower_components\Materialize\dist\css" />
+    <Folder Include="app\static\bower_components\Materialize\dist\font\" />
+    <Folder Include="app\static\bower_components\Materialize\dist\font\material-design-icons" />
+    <Folder Include="app\static\bower_components\Materialize\dist\js" />
+    <Folder Include="app\static\bower_components\Materialize\extras\" />
+    <Folder Include="app\static\bower_components\Materialize\extras\noUiSlider" />
+    <Folder Include="app\static\css\" />
+    <Folder Include="app\static\css\admin" />
+    <Folder Include="app\static\css\auth" />
+    <Folder Include="app\static\images\" />
+    <Folder Include="app\static\images\company" />
+    <Folder Include="app\static\images\user" />
+    <Folder Include="app\static\js" />
+    <Folder Include="app\static\js\admin" />
+    <Folder Include="app\static\js\auth" />
+    <Folder Include="app\templates" />
+    <Folder Include="app\templates\admin" />
+    <Folder Include="app\templates\auth" />
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>{8c7ef985-556b-4a0a-82ed-667a33ca4277}</Id>
+      <Description>env (Python 2.7)</Description>
+      <BaseInterpreter>{2af0f10d-7135-4994-9156-5d01c9c11b7e}</BaseInterpreter>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <LibraryPath>Lib\</LibraryPath>
+      <Version>2.7</Version>
+      <Architecture>x86</Architecture>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62115/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>True</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
