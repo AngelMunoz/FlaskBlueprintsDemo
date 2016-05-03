@@ -46,7 +46,7 @@ def subsidiaries():
                             newsubform=newsubform,
                             subsidiaries=company_subs)
                             
-@admin.route('/subsidiaries/<sub_name>', methods=['GET', 'PUT'])
+@admin.route('/subsidiaries/<sub_name>', methods=['GET', 'PUT', 'DELETE'])
 @login_required
 def subsidiary(sub_name):
     # look for the subsidiary with sub_name
@@ -58,19 +58,20 @@ def subsidiary(sub_name):
         if edit_subform.validate():
             edited_form =  check_sub_changes(current_sub, edit_subform)
             db.session.add(edited_form)
+            # try commit
             try:
                 db.session.commit()
-            except IntegrityError:
+            except IntegrityError: # catch for IntegrityErrr
                 db.session.rollback()
                 mess = "Either Name or the Interior number exist in the database"
+                # return a success response
                 return jsonify({"error":mess}), 409
-            # try commit
-            # catch for IntegrityErrr
-            # return a success response
-            print('Form valid')
         else:
             # return errors
             return jsonify(edit_subform.errors), 400
+    if request.method == "DELETE":
+        db.session.delete(current_sub)
+        db.session.commit()
     return render_template("admin/subsidiary_detail.html",
                             editform=edit_subform,
                             subsidiary=current_sub,
@@ -107,47 +108,53 @@ def employees():
     # render employee template
     pass
     
+@admin.route('/employees/<rfc>')
+@login_required
+def employee(rfc):
+    # render employee template
+    pass    
 
 
 def check_sub_changes(subsidiary, form):
     edited_sub = subsidiary
-    if subsidiary.name == form.name.data \
-       and len(form.name.data) > 1:
-        edited_sub.name = form.name.data
+    if subsidiary.name != form.name.data and form.name.data is not None:
+        if len(form.name.data) > 1:
+            edited_sub.name = form.name.data
     else:
         edited_sub.name = subsidiary.name
-    if subsidiary.street == form.street.data \
-       and len(form.street.data) > 1:
-        edited_sub.street = form.street.data
+    if subsidiary.street != form.street.data and form.street.data is not None:
+        if len(form.street.data) > 1:
+            edited_sub.street = form.street.data
     else:
         edited_sub.street = subsidiary.street
-    if subsidiary.suburb == form.suburb.data \
-       and len(form.suburb.data) > 1:
-        edited_sub.suburb = form.suburb.data
+    if subsidiary.suburb != form.suburb.data and form.suburb.data is not None:
+        if len(form.suburb.data) > 1:
+            edited_sub.suburb = form.suburb.data
     else:
         edited_sub.suburb = subsidiary.suburb
-    if subsidiary.ext_number == form.ext_number.data \
-       and len(form.extnumber.data) > 1:
+    if subsidiary.ext_number != form.ext_number.data \
+       and form.ext_number.data is not None:
         edited_sub.ext_number = form.ext_number.data
     else:
         edited_sub.ext_number = subsidiary.ext_number
-    if subsidiary.interior_number == form.interior_number.data \
-       and len(form.interior_number.data) > 1:
+    if subsidiary.interior_number != form.interior_number.data \
+       and form.interior_number.data is not None:
         edited_sub.interior_number = form.interior_number.data
     else:
         edited_sub.interior_number = subsidiary.interior_number
-    if subsidiary.postal_code == form.postal_code.data \
-       and len(form.postal_code.data) > 1:
+    if subsidiary.postal_code != form.postal_code.data \
+       and form.postal_code.data is not None:
         edited_sub.postal_code = form.postal_code.data
     else:
         edited_sub.postal_code = subsidiary.postal_code
-    if subsidiary.city == form.city.data and len(form.city.data) > 1:
-        edited_sub.city = form.city.data
+    if subsidiary.city != form.city.data and form.city.data is not None:
+        if len(form.city.data) > 1:
+            edited_sub.city = form.city.data
     else:
         edited_sub.city = subsidiary.city
-    if subsidiary.country == form.country.data \
-       and len(form.country.data) > 1:
-        edited_sub.country = form.country.data
+    if subsidiary.country != form.country.data and form.country.data is not None:
+        if len(form.country.data) > 1:
+            edited_sub.country = form.country.data
     else:
         edited_sub.country = subsidiary.country
     
