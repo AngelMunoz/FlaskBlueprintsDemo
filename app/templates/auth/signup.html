@@ -14,39 +14,10 @@
 {% block head %}
   <meta name="csrf-token" content="{{ csrf_token() }}">
 {% endblock %}
-{% block header%}
-  {{ super()}}
-{% endblock %}
 {% block content %}
-  
- 
-    <div>
+    <div class="container">
       <div>
         <h1>Sign Up</h1>
-        {% if sqlerror %}
-          <div class="collection">
-            <a href="#!" class="collection-item red white-text">{{ sqlerror }}</a>
-          </div>
-        {% endif %}
-        {% with errors = get_flashed_messages(category_filter=["error"]) %}
-          {% if errors %}
-            <div>
-            {% for error in errors %}
-            {{ error }}<br>
-            {% endfor %}
-            </div>
-          {% endif %}
-        {% endwith %}
-
-        {% if form.errors %}
-          <div>
-          {% for field, error in form.errors.items() %}
-            {% for e in error %}
-            {{ e }}<br>
-            {% endfor %}
-          {% endfor %}
-          </div>
-        {% endif %}
         <form id="signupForm" method="POST" action="." accept-charset="UTF-8" role="form" class="container">
           {{ form.csrf_token }}
           <label for="email">Email <small>*</small></label>
@@ -77,10 +48,6 @@
         </form>  
       </div>
     </div>
-{% endblock %}
-
-{% block footer %}
-  {{ super() }}
 {% endblock %}
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/auth/register.js')}}"></script>

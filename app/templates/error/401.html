@@ -1,0 +1,23 @@
+{% extends "auth/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2>Well, well... It seems that you wanted to go without permission.</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p class="flow-text">
+            Please Login  
+            <a href="{{url_for('auth.login')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Here</a>
+            <br>
+            or
+            <br>
+            Sign Up
+            <a href="{{url_for('auth.signup')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Here</a>
+        </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

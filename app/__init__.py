@@ -23,18 +23,44 @@ db = SQLAlchemy(app)
 
 # Error Handlers for whole app
 
-@app.errorhandler(404)
-def not_found(error):
-    return render_template("404.html"), 404
+@app.errorhandler(400)
+def bad_request(error):
+    """Handle 400 errors."""
+    return render_template("error/400.html"), 400
+
+
+@app.errorhandler(401)
+def not_authorized(error):
+    """Handle 401 errors."""
+    return render_template("error/401.html"), 401
+
 
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("403.html"), 403
+    """Handle 403 errors."""
+    return render_template("error/403.html"), 403
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Handle 404 errors."""
+    return render_template("error/404.html"), 404
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    """Handle 405 errors."""
+    return render_template("error/405.html", method=request.method), 405
+
 
 @app.errorhandler(500)
-def internal_error(error):
-    return render_template("500.html"), 500
-
+def internal_server_error(error):
+    """Handle 500 errors."""
+    if app.config["DEVELOPMENT"]:
+        # send error details
+        return error.message, 500
+    return render_template("error/500.html"), 500
+    
+    
 # Importing views 
 from app.auth.controller import auth
 from app.admin.controller import admin

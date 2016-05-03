@@ -15,10 +15,10 @@ admin = Blueprint('admin', __name__)
 @login_required
 def home():
     return render_template('admin/home.html', title="Home")
-
-
+    
     
 @admin.route('/company/', methods=['GET', 'PUT'])
+@login_required
 def company():
     editcompform = EditCompanyForm(request.form)
     current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()

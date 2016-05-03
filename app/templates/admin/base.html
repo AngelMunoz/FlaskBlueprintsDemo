@@ -28,6 +28,7 @@
                     {% block nav_mobile %}
                         {% if current_user.is_authenticated %}
                             <li><a>Hi {{ current_user.name }}</a></li>
+                            <li><a class="collection-item" href="{{ url_for('admin.home')}}">Home</a></li>
                             <li><a class="collection-item" href="{{ url_for('admin.company')}}">Company</a></li>
                             <li><a class="collection-item" href="{{ url_for('admin.subsidiaries')}}">Subsidiaries</a></li>
                             <li><a class="collection-item" href="{{ url_for('admin.employees')}}">Employees</a></li>
@@ -52,6 +53,7 @@
                                 </span>
                                 <a href="{{ url_for('auth.logout')}}"><i class="material-icons" alt="Close Session">settings_power</i></a>
                             </li>
+                            <a class="collection-item" href="{{ url_for('admin.home')}}">Home</a>
                             <a class="collection-item" href="{{ url_for('admin.company')}}">Company</a>
                             <a class="collection-item" href="{{ url_for('admin.subsidiaries')}}">Subsidiaries</a>
                             <a class="collection-item" href="{{ url_for('admin.employees')}}">Employees</a>

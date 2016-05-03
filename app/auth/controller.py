@@ -82,10 +82,6 @@ def logout():
 def user_loader(email):
     print("User loader")
     return User.query.get(email)
-     
-@lm.unauthorized_handler
-def unauthorized_handler():
-    return 'Unauthorized'
     
 @auth.before_app_request
 def load_user():

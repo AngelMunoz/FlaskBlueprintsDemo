@@ -1,0 +1,26 @@
+{% extends "auth/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h3>Wait What!? how did you do that!</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p class="flow-text">
+            It seems that we were not prepared for that, either you broke us on purpose or you did some magic that we couldn't handle.
+            <small>This means the server had an internal error.</small>
+            Try again what you needed to do otherwise contact the web master 'cause he needs to work.
+            <br>
+            {% if current_user.is_authenticated %}
+                <a href="{{url_for('admin.home')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Let's go home instead</a>
+            {% else %}
+                Hmm... It seems you are not logged in, having access may help you!
+                Login <a href="{{url_for('auth.login')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Here</a>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "auth/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h3>Hmm... We're pretty sure too that it was here...</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p class="flow-text">
+            The resource you were looking for could not be found  
+            check the name perhaps?
+            <br>
+            {% if current_user.is_authenticated %}
+                <a href="{{url_for('admin.home')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Let's go home instead</a>
+            {% else %}
+                Hmm... It seems you are not logged in, having access may help you find it!
+                Login <a href="{{url_for('auth.login')}}" class="btn btn-flat waves-effect waves-green light-blue lighten-5">Here</a>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
