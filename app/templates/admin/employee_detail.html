@@ -56,7 +56,9 @@
                     <label for="email">Email </label>
                     {{ render_field(newempform.email, placeholder="Your Email Address",
                                                 autofocus="", class="col s6") }}
-                    <label for="password">Password </label>
+                    <label for="password">Password <small>*</small>
+                        <br><small class="red-text">At least: 8 characters 1 Uppercase, 1 Number and 1 special character (!@#$%^*)</small>
+                    </label>
                     {{ render_field(newempform.password, placeholder="Password", class="col s6") }}
                     <label for="password_repeat">Repeat your password </label>
                     {{ render_field(newempform.password_repeat, placeholder="Please type again your password", class="col s6") }}

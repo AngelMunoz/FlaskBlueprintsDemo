@@ -23,7 +23,9 @@
           <label for="email">Email <small>*</small></label>
           {{ render_field(form.email, placeholder="Your Email Address",
                                       autofocus="", class="col s6") }}
-          <label for="password">Password <small>*</small></label>
+          <label for="password">Password <small>*</small>
+            <br><small class="red-text">At least: 8 characters 1 Uppercase, 1 Number and 1 special character (!@#$%^*)</small>
+          </label>
           {{ render_field(form.password, placeholder="Password", class="col s6") }}
           <label for="password_repeat">Repeat your password <small>*</small></label>
           {{ render_field(form.password_repeat, placeholder="Please type again your password", class="col s6") }}
