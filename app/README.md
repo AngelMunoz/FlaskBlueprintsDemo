@@ -125,4 +125,5 @@ the final result will be
     </body>
 </html>
 ```
-that's what jinja does with our templates (our views)
+that's what jinja does with our templates (our views).
+for each module please visit its readme file for further explanations.
