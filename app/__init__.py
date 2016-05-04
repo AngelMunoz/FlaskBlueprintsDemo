@@ -69,6 +69,7 @@ def index():
 @app.errorhandler(500)
 def internal_server_error(error):
     """Handle 500 errors."""
+    db.session.rollback()
     return render_template("error/500.html"), 500
 # init database 
 db.create_all()
