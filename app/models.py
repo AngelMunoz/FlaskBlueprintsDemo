@@ -27,6 +27,9 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
     
+    # the following methods are used by flask-login to track
+    # user activity and session
+    
     @property
     def is_active(self):
         """True, as all users are active."""
