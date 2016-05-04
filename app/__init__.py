@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from itsdangerous import URLSafeTimedSerializer
 from flask_wtf.csrf import CsrfProtect
+from flask.ext.cors import CORS
 
 app = Flask(__name__, )
 
@@ -20,6 +21,8 @@ csrf = CsrfProtect()
 csrf.init_app(app)
 
 db = SQLAlchemy(app)
+CORS(app)
+
 
 # Error Handlers for whole app
 
