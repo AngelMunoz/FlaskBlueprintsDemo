@@ -79,6 +79,10 @@
                     <a href="{{ url_for('admin.subsidiaries')}}{{ subsidiary.name}}" class="collection-item">{{ subsidiary.name }}</a>
                 {% endfor %}
             </ul>
+            {% if subsidiaries|length < 1%}
+                <h5>It looks quite empty here</h5>
+                <p>the subsidiaries you add will appear above this text :)</p>
+            {% endif %}
         </div>
         <div class="col s4">
         <!-- Promo Content 2 goes here -->

@@ -97,7 +97,10 @@
                     <a href="{{ url_for('admin.employees')}}{{ employee.rfc}}" class="collection-item">{{ employee.name }}</a>
                 {% endfor %}
             </ul>
-
+            {% if employees|length < 1%}
+                <h5>It looks quite empty here</h5>
+                <p>head to <a href="{{ url_for('admin.employees') }}">Employees</a> to add new employees :)</p>
+            {% endif %}
         </div>
         <div class="col s8">
         <!-- Promo Content 2 goes here -->

@@ -94,6 +94,10 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% if subsidiaries|length < 1%}
+                <h5>It looks quite empty here</h5>
+                <p>Before adding employees you should add a subsidiary first :)</p>
+            {% endif %}
         </div>
         <div class="row">
             {% for subsidiary in subsidiaries %}
@@ -109,6 +113,10 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% if subsidiary.employees|length < 1%}
+                <h5>It looks quite empty here</h5>
+                <p>Use the menu on the bottom to add more employees :)</p>
+            {% endif %}
             </div>
         {% endfor %}
         </div>
