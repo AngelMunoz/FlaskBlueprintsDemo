@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, \
-                  flash, g, session, redirect, url_for, jsonify
+                  flash, g, session, redirect, url_for, jsonify,\
+                  abort
 from flask.ext.login import login_required, login_user, \
                             current_user, logout_user
 from sqlalchemy.exc import IntegrityError
@@ -141,7 +142,9 @@ def employees():
                 except IntegrityError:
                     db.session.rollback()
                     mess = "Either Email or the RFC exist in the database"
-                    return jsonify({"error":mess}), 400                
+                    return jsonify({"error":mess}), 400
+            else:
+                abort(404)
         else:
             return jsonify(newempform.errors), 400
     return render_template('admin/employee.html',
@@ -156,6 +159,9 @@ def employees():
 def employee(rfc):
     # look for the subsidiary with sub_name
     employee = Employee.query.filter(Employee.rfc == rfc).first()
+    if employee is None:
+        db.session.rollback()
+        abort(404)
     current_sub = Subsidiary.query.filter(Subsidiary.id == employee.subsidiary_id).first()
     edit_empform = EditEmployeeForm(request.form)
     current_company = Company.query.filter(Company.user_id == current_user.id).first()
