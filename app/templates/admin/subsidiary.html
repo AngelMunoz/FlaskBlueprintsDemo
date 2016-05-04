@@ -79,6 +79,9 @@
                     <a href="{{ url_for('admin.subsidiaries')}}{{ subsidiary.name}}" class="collection-item">{{ subsidiary.name }}</a>
                 {% endfor %}
             </ul>
+            {% if subsidiaries is None %}
+                <h5>It looks quite empty why don't you add a new one in the menu on the bottom right?</h5>
+            {% endif %}
         </div>
         <div class="col s4">
         <!-- Promo Content 2 goes here -->

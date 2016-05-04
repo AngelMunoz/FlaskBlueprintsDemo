@@ -109,6 +109,9 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% if subsidiaries is None %}
+                    <h5>It looks quite empty why don't you add a new one in the menu on the bottom right?</h5>
+                {% endif %}
             </div>
         {% endfor %}
         </div>
