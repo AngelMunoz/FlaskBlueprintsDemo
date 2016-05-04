@@ -61,7 +61,7 @@ app.register_blueprint(admin, url_prefix='/admin')
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
     
 @app.errorhandler(500)
 def internal_server_error(error):
