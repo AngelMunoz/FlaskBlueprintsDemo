@@ -51,7 +51,7 @@ def login():
         return redirect(url_for('admin.home'))
     if request.method == "POST":
         if form.validate():
-            user = User.query.filter_by(email=form.email.data).first_or_404()
+            user = User.query.filter_by(email=form.email.data).first()
             if user and check_password_hash(user.pw_hash, form.password.data):
                 user.authenticated = True
                 db.session.add(user)

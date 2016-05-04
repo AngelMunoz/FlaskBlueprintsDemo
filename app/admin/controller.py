@@ -21,7 +21,7 @@ def home():
 @login_required
 def company():
     editcompform = EditCompanyForm(request.form)
-    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    current_company = Company.query.filter(Company.user_id == current_user.id).first()
     subsidiaries = current_company.subsidiaries
     if request.method == "PUT":
         if editcompform.validate():
@@ -45,7 +45,7 @@ def company():
 @login_required
 def subsidiaries():
     newsubform = NewSubsidiaryForm(request.form)
-    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    current_company = Company.query.filter(Company.user_id == current_user.id).first()
     if request.method == "POST": 
         if newsubform.validate():
             new_sub = Subsidiary()
@@ -76,7 +76,7 @@ def subsidiaries():
 @login_required
 def subsidiary(sub_name):
     # look for the subsidiary with sub_name
-    current_sub = Subsidiary.query.filter(Subsidiary.name == sub_name).first_or_404()
+    current_sub = Subsidiary.query.filter(Subsidiary.name == sub_name).first()
     sub_employees = current_sub.employees
     edit_subform = EditSubsidiaryForm(request.form)
     if request.method == 'PUT':
@@ -109,7 +109,7 @@ def subsidiary(sub_name):
 @admin.route('/employees/', methods=['GET','POST'])
 @login_required
 def employees():
-    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    current_company = Company.query.filter(Company.user_id == current_user.id).first()
     # send subsidiary item
     subsidiaries = current_company.subsidiaries
     # send new employee form
@@ -155,10 +155,10 @@ def employees():
 @login_required
 def employee(rfc):
     # look for the subsidiary with sub_name
-    employee = Employee.query.filter(Employee.rfc == rfc).first_or_404()
-    current_sub = Subsidiary.query.filter(Subsidiary.id == employee.subsidiary_id).first_or_404()
+    employee = Employee.query.filter(Employee.rfc == rfc).first()
+    current_sub = Subsidiary.query.filter(Subsidiary.id == employee.subsidiary_id).first()
     edit_empform = EditEmployeeForm(request.form)
-    current_company = Company.query.filter(Company.user_id == current_user.id).first_or_404()
+    current_company = Company.query.filter(Company.user_id == current_user.id).first()
     sub_choices = [ (c.id, c.name) for c in Subsidiary.query.\
                     filter(Subsidiary.company_id == current_company.id).\
                     order_by(Subsidiary.name).all()]  

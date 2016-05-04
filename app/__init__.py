@@ -44,10 +44,10 @@ def forbidden(error):
     return render_template("error/403.html"), 403
 
 
-# @app.errorhandler(404)
-# def not_found(error):
-#     """Handle 404 errors."""
-#     return render_template("error/404.html"), 404
+@app.errorhandler(404)
+def not_found(error):
+    """Handle 404 errors."""
+    return render_template("error/404.html"), 404
 
 @app.errorhandler(405)
 def method_not_allowed(error):
