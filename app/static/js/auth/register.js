@@ -84,7 +84,7 @@ $(document).ready(function() {
                 success: function(response) {
                     Materialize.toast("Signed Up Succesfully!\n Please Log in!", 4000);
                     setTimeout(function() {
-                        window.location.assign(location.host+"/auth/login/");    
+                        window.location.assign("/auth/login/");    
                     }, 100);
                 },
                 error: function(error) {
