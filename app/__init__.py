@@ -4,7 +4,7 @@ from flask.ext.login import LoginManager
 from itsdangerous import URLSafeTimedSerializer
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.cors import CORS
-
+from flask.ext.restful import Api
 app = Flask(__name__, )
 
 app.config.from_object('config')
@@ -23,6 +23,7 @@ csrf.init_app(app)
 db = SQLAlchemy(app)
 CORS(app)
 
+api = Api(app)
 
 # Error Handlers for whole app
 
@@ -58,9 +59,11 @@ def method_not_allowed(error):
 # Importing views 
 from app.auth.controller import auth
 from app.admin.controller import admin
+from app.v1.routes import apiv1
 # register blueprints
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(apiv1, url_prefix='/api/v1/')
 
 @app.route('/')
 def index():
