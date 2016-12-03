@@ -11,7 +11,7 @@ Jinja2==2.8
 MarkupSafe==0.23
 mccabe==0.4.0
 pep8==1.7.0
-pg8000==1.10.6
+psycopg2==2.6.2
 pyflakes==1.0.0
 python-dateutil==2.4.2
 six==1.10.0
