@@ -1,9 +1,9 @@
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, IntegerField, \
                     SelectField
 from wtforms.validators import Required, NumberRange, Optional, Email
 
-class NewSubsidiaryForm(Form):
+class NewSubsidiaryForm(FlaskForm):
     name = StringField('Name', [Required(message="Please add your Company's Name")])
     street = StringField('Street', [Required(message="Please add your Company's Name")])
     suburb = StringField('Suburb', [Required(message="Please add your Company's Name")])
@@ -13,7 +13,7 @@ class NewSubsidiaryForm(Form):
     city = StringField('City', [Required(message="Please add your Company's Name")])
     country = StringField('Country', [Required(message="Please add your Company's Name")])
     
-class EditSubsidiaryForm(Form):
+class EditSubsidiaryForm(FlaskForm):
     name = StringField('Name', [Optional()])
     street = StringField('Street', [Optional()])
     suburb = StringField('Suburb', [Optional()])
@@ -23,11 +23,11 @@ class EditSubsidiaryForm(Form):
     city = StringField('City', [Optional()])
     country = StringField('Country', [Optional()])
     
-class EditCompanyForm(Form):
+class EditCompanyForm(FlaskForm):
     new_name = StringField('Email Address', [Required(message='Please add the new name of the company')])
     
 
-class NewEmployeeForm(Form):
+class NewEmployeeForm(FlaskForm):
     email = StringField('Email Address', [Email(),Required(message="Please write the email.")])
     password = PasswordField('Password', [Required(message="Write the password")])
     password_repeat = PasswordField("Please Repeat your password", [Required(message="Write the password again please")])
@@ -39,7 +39,7 @@ class NewEmployeeForm(Form):
     job_name = StringField('job name', [Required(message="Please add the job's Name")])
     subsidiary_id = SelectField('Subsidiary Name',[Required(message="Please select the subsidiary")], choices=[], coerce=int)
     
-class EditEmployeeForm(Form):
+class EditEmployeeForm(FlaskForm):
     email = StringField('Email Address', [Optional()])
     password = PasswordField('Password', [Optional()])
     password_repeat = PasswordField("Repeat the Password", [Optional()])

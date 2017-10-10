@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, jsonify
 from werkzeug import check_password_hash, generate_password_hash
-from flask.ext.login import login_required, login_user, current_user, logout_user
+from flask_login import login_required, login_user, current_user, logout_user
 from sqlalchemy.exc import IntegrityError
 from app import db, lm
 from app.auth.forms import LoginForm, RegisterForm
@@ -30,7 +30,8 @@ def signup():
                 except IntegrityError:
                     db.session.rollback()
                     mess = "Either Email or the RFC exist in the database"
-                    return jsonify({"error":mess}), 409
+                    flash(mess)
+                    return render_template("auth/signup.html", form=form, title="Sign Up")
                 company = Company(form.company.data)
                 company.user_id = user.id
                 db.session.add(company)

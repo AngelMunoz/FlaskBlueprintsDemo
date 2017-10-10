@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for, jsonify,\
                   abort
-from flask.ext.login import login_required, login_user, \
+from flask_login import login_required, login_user, \
                             current_user, logout_user
 from sqlalchemy.exc import IntegrityError
 from app import db, lm

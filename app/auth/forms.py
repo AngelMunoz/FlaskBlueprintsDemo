@@ -1,16 +1,16 @@
-from flask.ext.wtf import Form # , RecaptchaField
+from flask_wtf import FlaskForm # , RecaptchaField
 from wtforms import StringField, PasswordField #, BooleanField
 from wtforms.validators import Required, Email, EqualTo
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     email       = StringField('Email Address', [Email(),
                     Required(message='Forgot your email address?')])
     password    = PasswordField('Password', [
                     Required(message='Must provide a password.')])
                     
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     email               = StringField('Email Address', [Email(),
                             Required(message='Forgot your email address?')])
     password            = PasswordField('Password', [

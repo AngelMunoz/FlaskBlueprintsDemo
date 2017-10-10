@@ -1,9 +1,9 @@
 from flask import Flask, render_template, redirect, url_for
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from itsdangerous import URLSafeTimedSerializer
-from flask_wtf.csrf import CsrfProtect
-from flask.ext.cors import CORS
+from flask_wtf.csrf import CSRFProtect
+from flask_cors import CORS
 
 app = Flask(__name__, )
 
@@ -17,7 +17,7 @@ lm.init_app(app)
 lm.session_protection = "basic" # or strong depending on your needs
 login_serializer = URLSafeTimedSerializer(app.secret_key)
 
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 csrf.init_app(app)
 
 db = SQLAlchemy(app)

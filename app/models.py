@@ -1,6 +1,6 @@
 from app import db
 from werkzeug import check_password_hash, generate_password_hash
-from flask.ext.login import UserMixin
+from flask_login import UserMixin
 class User(db.Model, UserMixin):
     """
     Model Representing the user.
@@ -11,9 +11,9 @@ class User(db.Model, UserMixin):
                                               unique=True)
     pw_hash         = db.Column(db.String(192), nullable=False)
     name            = db.Column(db.String(60), nullable=False)
-    second_name     = db.Column(db.String(60))
+    second_name     = db.Column(db.String(60), nullable=True)
     lastname        = db.Column(db.String(45), nullable=False)
-    second_lastname        = db.Column(db.String(45), nullable=False)
+    second_lastname        = db.Column(db.String(45), nullable=True)
     date_created    = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified   = db.Column(db.DateTime, default=db.func.current_timestamp(),
                                             onupdate=db.func.current_timestamp())
