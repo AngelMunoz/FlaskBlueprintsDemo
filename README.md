@@ -17,3 +17,18 @@ each module will contain its own readme file explaining what is done there.
 
 Have a nice day! oh by the way! this app is hosted in Heroku (thank you continuous deployment!)
 which picks the files in github and serves them and updates as soon as the repository is updated.
+
+
+## UPDATE 10/10/2017
+Added new Files
+- `.env`
+- `Pipfile/Pipfile.lock`
+
+You aren't likely to put `.env` into source control but I put it here for completeness.
+
+Added Pipfile/Pipfile.lock these is an amazing way to keep your python dependencies management under control.
+(it even loads .env files!) check more about it [here](https://github.com/kennethreitz/pipenv)
+### Misc.
+- Fixed Sign up form
+- Updated dependencies
+- Fixed some warning deprecation messages
