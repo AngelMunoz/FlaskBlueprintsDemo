@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+[packages]
+
+"aniso8601" = "*"
+Flask = "*"
+"Flask-Cors" = "*"
+"Flask-Login" = "*"
+"Flask-SQLAlchemy" = "*"
+"Flask-WTF" = "*"
+gunicorn = "*"
+itsdangerous = "*"
+"Jinja2" = "*"
+MarkupSafe = "*"
+mccabe = "*"
+"psycopg2" = "*"
+"python-dateutil" = "*"
+SQLAlchemy = "*"
+Werkzeug = "*"
+WTForms = "*"
+
+
+[requires]
+python_version = "3.6"
