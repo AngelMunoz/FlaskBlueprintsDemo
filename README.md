@@ -1,3 +1,6 @@
+#### NOTE:
+I made this when I was starting web development overall if there are old patterns and stuff you see it's a bad practice please raise an issue or make a pr :) I'd gladly accept it thanks
+
 # Hello everyone!
 This is a flask application using blueprints.
 Blueprints are really good when one of the concerns is scalable apps.
