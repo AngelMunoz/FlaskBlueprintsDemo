@@ -1,5 +1,12 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "python.pythonPath": "${workspaceRoot}/env/Scripts/python.exe",
-    "python.autoComplete.extraPaths": ["${workspaceRoot}/env/Lib", "${workspaceRoot}/env/Lib/site-packages"]
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    }
 }
